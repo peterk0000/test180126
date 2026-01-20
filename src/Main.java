@@ -12,41 +12,43 @@ public class Main {
         totalThreads = sc.nextInt();
         sc.close();
 
-        for (int i = 1; i <=totalThreads; i++) {
+        while (true) {
+            for (int i = 1; i <=totalThreads; i++) {
 
-            final int numberOfThread = i;
+                final int numberOfThread = i;
 
-            Thread thread = new Thread("Поток-" + i) {
-              @Override
-              public void run() {
-                  try {
-                      for (int i = 1; i < 100; i++) {
-                          synchronized (lock) {
-                              while (quene != numberOfThread) {
-                                  lock.wait();
+                Thread thread = new Thread("Поток-" + i) {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 1; i < 100; i++) {
+                                synchronized (lock) {
+                                    while (quene != numberOfThread) {
+                                        lock.wait();
 
-                              }
+                                    }
 
-                              System.out.println(getName());
+                                    System.out.println(getName());
 
-                              if (numberOfThread == totalThreads) {
-                                  quene = 1;
-                              } else {
-                                  quene = numberOfThread + 1;
-                              }
+                                    if (numberOfThread == totalThreads) {
+                                        quene = 1;
+                                    } else {
+                                        quene = numberOfThread + 1;
+                                    }
 
-                              lock.notifyAll();
-                          }
+                                    lock.notifyAll();
+                                }
 
-                      }
-                  } catch (InterruptedException e) {
-                      e.printStackTrace();
-                  }
-              }
-            };
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
 
-            thread.start();
+                thread.start();
 
+            }
         }
     }
 }
