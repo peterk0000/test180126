@@ -21,7 +21,7 @@ public class Main {
                     @Override
                     public void run() {
                         try {
-                            for (int i = 1; i < 100; i++) {
+                            while (true){
                                 synchronized (lock) {
                                     while (quene != numberOfThread) {
                                         lock.wait();
